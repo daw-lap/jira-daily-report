@@ -4,9 +4,20 @@ from datetime import datetime, timedelta, time
 import locale
 from CTkTable import CTkTable
 import json
+import sys
+JSON_PATTERN = """
+{
+    "user" = "jira-user",
+    "url" = "jira-url",
+    "token" = "jira-token",
+}
+"""
 
-with open('config.json', 'r') as file:
-    data = json.load(file)
+try:
+    with open('config.json', 'r') as file:
+        data = json.load(file)
+except FileNotFoundError as e:
+    sys.exit(f"{e}\nPlease create config.json file according to following pattern:\n{JSON_PATTERN}")
 
 JIRA_USER = data["user"]
 JIRA_URL = data["url"]
